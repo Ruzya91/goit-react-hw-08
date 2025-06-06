@@ -1,49 +1,42 @@
-import { useDispatch } from "react-redux";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { addContact } from "../../redux/contactsOps";
-import styles from "./ContactForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "../../redux/contacts/operations";
+import { selectContacts } from "../../redux/contacts/selectors";
+import { nanoid } from "nanoid";
 
-const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
-  number: Yup.string().required("Number is required"),
-});
-
-const ContactForm = () => {
+export default function ContactForm() {
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+
+    const isExist = contacts.some(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isExist) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+
+    dispatch(addContact({ id: nanoid(), name, number }));
+    form.reset();
+  };
 
   return (
-    <Formik
-      initialValues={{ name: "", number: "" }}
-      validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        dispatch(addContact({ name: values.name, number: values.number }));
-        resetForm();
-      }}
-    >
-      {({ errors, touched }) => (
-        <div className={styles.contactform}>
-          <Form className={styles.form}>
-            <label className={styles.label}>Name</label>
-            <Field name="name" className={styles.field} />
-            {errors.name && touched.name && (
-              <div className={styles.error}>{errors.name}</div>
-            )}
-
-            <label className={styles.label}>Number</label>
-            <Field name="number" className={styles.field} />
-            {errors.number && touched.number && (
-              <div className={styles.error}>{errors.number}</div>
-            )}
-
-            <button type="submit" className={styles.button}>
-              Add Contact
-            </button>
-          </Form>
-        </div>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name
+        <input type="text" name="name" required />
+      </label>
+      <label>
+        Number
+        <input type="tel" name="number" required />
+      </label>
+      <button type="submit">Add contact</button>
+    </form>
   );
-};
-
-export default ContactForm;
+}

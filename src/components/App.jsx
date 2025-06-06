@@ -1,26 +1,61 @@
-import React from "react";
 import { useEffect } from "react";
-import "../components/App.css";
-import { useDispatch } from "react-redux";
-import { fetchContacts } from "../redux/contactsOps";
-import ContactList from "../components/ContactList/ContactList";
-import SearchBox from "../components/SearchBox/SearchBox";
-import ContactForm from "../components/ContactForm/ContactForm";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 
-const App = () => {
+import Layout from "./Layout/Layout";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import ContactsPage from "./pages/ContactsPage";
+
+import RestrictedRoute from "./routes/RestrictedRoute";
+import PrivateRoute from "./routes/PrivateRoute";
+
+import { refreshUser } from "../redux/auth/operations";
+import { selectIsRefreshing } from "../redux/auth/selectors";
+
+export default function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
+
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <div className="App">
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      <ContactList />
-    </div>
-  );
-};
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
 
-export default App;
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute redirectTo="/contacts">
+              <RegisterPage />
+            </RestrictedRoute>
+          }
+        />
+
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute redirectTo="/contacts">
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute redirectTo="/login">
+              <ContactsPage />
+            </PrivateRoute>
+          }
+        />
+      </Route>
+    </Routes>
+  );
+}
