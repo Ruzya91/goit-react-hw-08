@@ -1,7 +1,7 @@
 import React from "react";
-import LoginForm from "../Forms/LoginForm";
+import RegistrationForm from "../components/Forms/RegistrationForm";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div
       style={{
@@ -12,10 +12,10 @@ const LoginPage = () => {
         display: "flex",
       }}
     >
-      <h2>Login</h2>
-      <LoginForm />
+      <h2>Register</h2>
+      <RegistrationForm />
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

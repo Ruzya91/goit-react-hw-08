@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import Layout from "./Layout/Layout";
-import HomePage from "./pages/HomePage";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import ContactsPage from "./pages/ContactsPage";
+import HomePage from "../pages/HomePage";
+import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/LoginPage";
+import ContactsPage from "../pages/ContactsPage";
 
 import RestrictedRoute from "./routes/RestrictedRoute";
 import PrivateRoute from "./routes/PrivateRoute";
