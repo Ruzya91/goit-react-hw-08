@@ -3,7 +3,15 @@ import RegistrationForm from "../Forms/RegistrationForm";
 
 const RegisterPage = () => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <div
+      style={{
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "2rem",
+        display: "flex",
+      }}
+    >
       <h2>Register</h2>
       <RegistrationForm />
     </div>

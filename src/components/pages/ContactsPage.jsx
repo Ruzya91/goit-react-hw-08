@@ -16,10 +16,10 @@ const ContactsPage = () => {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h2>Phonebook</h2>
+      <h2 style={{ display: "flex", justifyContent: "center" }}>Phonebook</h2>
       <ContactForm />
 
-      <h2>Contacts</h2>
+      <h2 style={{ display: "flex", justifyContent: "center" }}> Contacts </h2>
       <Filter />
       {isLoading ? <p>Loading...</p> : <ContactList />}
     </div>

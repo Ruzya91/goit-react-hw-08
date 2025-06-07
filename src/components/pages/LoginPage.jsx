@@ -3,7 +3,15 @@ import LoginForm from "../Forms/LoginForm";
 
 const LoginPage = () => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <div
+      style={{
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "2rem",
+        display: "flex",
+      }}
+    >
       <h2>Login</h2>
       <LoginForm />
     </div>
