@@ -17,6 +17,13 @@ export default function Navigation() {
           </NavLink>
         </>
       )}
+      {!isLoggedIn && (
+        <>
+          <NavLink className={css.link} to="/">
+            Home
+          </NavLink>
+        </>
+      )}
     </nav>
   );
 }

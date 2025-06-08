@@ -13,12 +13,10 @@ export default function ContactForm() {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
 
-    const isExist = contacts.some(
-      (contact) => contact.name.toLowerCase() === name.toLowerCase()
-    );
+    const isExist = contacts.some((contact) => contact.number === number);
 
     if (isExist) {
-      alert(`${name} is already in contacts`);
+      alert(`Number ${number} is already in contacts`);
       return;
     }
 
